@@ -3,12 +3,20 @@ package com.springBajo8.springBajo8.web;
 
 import com.springBajo8.springBajo8.domain.citasDTOReactiva;
 import com.springBajo8.springBajo8.service.IcitasReactivaService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 @RestController
 public class citasReactivaResource {
@@ -37,6 +45,27 @@ public class citasReactivaResource {
                 .flatMap(citasDTOReactiva1 -> Mono.just(ResponseEntity.ok(citasDTOReactiva1)))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
 
+    }
+
+    @PutMapping("/citasReactivas/cancelar/{id}")
+    private Mono<citasDTOReactiva> updateEstado(@PathVariable("id") String id) {
+        citasDTOReactiva cita = this.icitasReactivaService.findById(id).block();
+        cita.setEstadoReservaCita("Cita cancelada");
+        return this.icitasReactivaService.save(cita);
+    }
+
+    @GetMapping("/citasReactivas/fecha-hora/{fecha}/{hora}")
+    private Mono<citasDTOReactiva> consultarFechaHora(@PathVariable String fecha, @PathVariable String hora){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+        LocalDate date = LocalDate.parse(fecha);
+        return this.icitasReactivaService.findByFechaReservaCitaAndHoraReservaCita(date, hora);
+    }
+
+    @GetMapping("/citasReactivas/medico/{id}")
+    private Mono<String> consultarFechaHora(@PathVariable String id){
+        citasDTOReactiva cita = this.icitasReactivaService.findById(id).block();
+        return Mono.just(cita.getNombreMedico() + " " + cita.getApellidosPaciente());
     }
 
     @GetMapping("/citasReactivas/{idPaciente}/byidPaciente")

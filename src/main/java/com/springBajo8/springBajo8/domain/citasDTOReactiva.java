@@ -29,6 +29,20 @@ public class citasDTOReactiva {
 
     private String estadoReservaCita;
 
+    public citasDTOReactiva() {
+    }
+
+    public citasDTOReactiva(String idPaciente, String nombrePaciente, String apellidosPaciente, String nombreMedico, String apellidosMedico, LocalDate fechaReservaCita, String horaReservaCita, String estadoReservaCita) {
+        this.idPaciente = idPaciente;
+        this.nombrePaciente = nombrePaciente;
+        this.apellidosPaciente = apellidosPaciente;
+        this.nombreMedico = nombreMedico;
+        this.apellidosMedico = apellidosMedico;
+        this.fechaReservaCita = fechaReservaCita;
+        this.horaReservaCita = horaReservaCita;
+        this.estadoReservaCita = estadoReservaCita;
+    }
+
     public String getId() {
         return id;
     }

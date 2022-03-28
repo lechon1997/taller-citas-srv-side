@@ -1,8 +1,5 @@
 package com.springBajo8.springBajo8.service.impl;
 
-//import com.yoandypv.reactivestack.messages.domain.Message;
-//import com.yoandypv.reactivestack.messages.repository.MessageRepository;
-//import com.yoandypv.reactivestack.messages.service.MessageService;
 import com.springBajo8.springBajo8.domain.citasDTOReactiva;
 import com.springBajo8.springBajo8.repository.IcitasReactivaRepository;
 import com.springBajo8.springBajo8.service.IcitasReactivaService;
@@ -10,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDate;
 
 @Service
 public class citasReactivaServiceImpl implements IcitasReactivaService {
@@ -54,5 +53,9 @@ public class citasReactivaServiceImpl implements IcitasReactivaService {
     @Override
     public Mono<citasDTOReactiva> findById(String id) {
         return this.IcitasReactivaRepository.findById(id);
+    }
+
+    public Mono<citasDTOReactiva> findByFechaReservaCitaAndHoraReservaCita(LocalDate fecha, String hora){
+        return this.IcitasReactivaRepository.findByFechaReservaCitaAndHoraReservaCita(fecha,hora);
     }
 }
