@@ -4,7 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Document(collection = "citas")
@@ -29,10 +31,14 @@ public class citasDTOReactiva {
 
     private String estadoReservaCita;
 
+    private Padecimiento padecimiento;
+
+    private List<Tratamiento> tratamientos;
+
     public citasDTOReactiva() {
     }
 
-    public citasDTOReactiva(String idPaciente, String nombrePaciente, String apellidosPaciente, String nombreMedico, String apellidosMedico, LocalDate fechaReservaCita, String horaReservaCita, String estadoReservaCita) {
+    public citasDTOReactiva(String idPaciente, String nombrePaciente, String apellidosPaciente, String nombreMedico, String apellidosMedico, LocalDate fechaReservaCita, String horaReservaCita, String estadoReservaCita, Padecimiento padecimiento) {
         this.idPaciente = idPaciente;
         this.nombrePaciente = nombrePaciente;
         this.apellidosPaciente = apellidosPaciente;
@@ -41,6 +47,24 @@ public class citasDTOReactiva {
         this.fechaReservaCita = fechaReservaCita;
         this.horaReservaCita = horaReservaCita;
         this.estadoReservaCita = estadoReservaCita;
+        this.tratamientos = new ArrayList<>();
+        this.padecimiento = padecimiento;
+    }
+
+    public Padecimiento getPadecimiento() {
+        return padecimiento;
+    }
+
+    public void setPadecimiento(Padecimiento padecimiento) {
+        this.padecimiento = padecimiento;
+    }
+
+    public List<Tratamiento> getTratamientos() {
+        return tratamientos;
+    }
+
+    public void setTratamientos(List<Tratamiento> tratamientos) {
+        this.tratamientos = tratamientos;
     }
 
     public String getId() {

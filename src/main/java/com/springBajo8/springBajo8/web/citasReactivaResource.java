@@ -1,9 +1,10 @@
 package com.springBajo8.springBajo8.web;
 
 
+import com.springBajo8.springBajo8.domain.Padecimiento;
 import com.springBajo8.springBajo8.domain.citasDTOReactiva;
+import com.springBajo8.springBajo8.service.IPadecimiento;
 import com.springBajo8.springBajo8.service.IcitasReactivaService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
 
 @RestController
 public class citasReactivaResource {
@@ -24,11 +21,15 @@ public class citasReactivaResource {
     @Autowired
     private IcitasReactivaService icitasReactivaService;
 
+    @Autowired
+    private IPadecimiento ipadecimiento;
+
     @PostMapping("/citasReactivas")
     @ResponseStatus(HttpStatus.CREATED)
     private Mono<citasDTOReactiva> save(@RequestBody citasDTOReactiva citasDTOReactiva) {
         int x = 3;
-        return this.icitasReactivaService.save(citasDTOReactiva);
+        Padecimiento p = citasDTOReactiva.getPadecimiento();
+        return ipadecimiento.save(p).then((icitasReactivaService.save(citasDTOReactiva)));
     }
 
     @DeleteMapping("/citasReactivas/{id}")
@@ -76,6 +77,11 @@ public class citasReactivaResource {
     @GetMapping(value = "/citasReactivas")
     private Flux<citasDTOReactiva> findAll() {
         return this.icitasReactivaService.findAll();
+    }
+
+    @GetMapping("/citasReactivas/{id}/padecimiento")
+    private Flux<Padecimiento> listarPadecimientosCliente(@PathVariable String id){
+        return this.ipadecimiento.listarPadecimientosPaciente(id);
     }
 
 }
