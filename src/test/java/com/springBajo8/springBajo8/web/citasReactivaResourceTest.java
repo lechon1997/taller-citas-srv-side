@@ -3,7 +3,6 @@ package com.springBajo8.springBajo8.web;
 import com.springBajo8.springBajo8.domain.Padecimiento;
 import com.springBajo8.springBajo8.domain.citasDTOReactiva;
 import com.springBajo8.springBajo8.repository.IcitasReactivaRepository;
-import jdk.vm.ci.meta.Local;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +27,7 @@ class citasReactivaResourceTest {
                 "ApellidoDePepe",
                 "DoctorJuan",
                 "DoctorRodriguez",
-                new LocalDate().parse("2022-30-24"),
+                date,
                 "05:00 am",
                 "Cita Aceptada",
                 new Padecimiento("Dolor de cabeza","1"));
